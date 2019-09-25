@@ -8,6 +8,7 @@ import Header from "./components/Header";
 import Menu from "./components/Menu";
 import Main from "./components/Main";
 
+
 const url = process.env.PUBLIC_URL + '/img/fon.png';
 
 const HeaderWrapper = styled.header`

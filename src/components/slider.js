@@ -33,20 +33,20 @@ class Slider extends React.Component{
         this.prevOne = this.prevOne.bind(this);
     }
     componentDidMount(){
-        this.interval = setInterval(()=> this.intervalBetweenSlides(), 3000);
+        this.interval = setInterval(()=> this.intervalBetweenSlides(), 3000 );
     }
     componentWillUnmount(){
         clearInterval(this.interval);
     }
     intervalBetweenSlides(){
         if(this.state.autoplay === true){
-            if(this.state.active === this.state.max -1 ){
+            if(this.state.active === this.state.max - 1 ){
                 this.state.active = 0;
             }else{
-                this.state++;
+                this.state.active++;
             }
 
-            this.state({
+            this.setState({
                 active: this.state.active
             });
         }
@@ -63,7 +63,7 @@ class Slider extends React.Component{
         }) :
         this.setState({
             active: 0
-        });
+        })
     }
     prevOne(){
         (this.state.active > 0) ? 
@@ -72,7 +72,7 @@ class Slider extends React.Component{
         }) :
         this.setState({
             active: this.state.max - 1
-        });
+        })
     }
 
     dots(index, event) {
@@ -87,7 +87,7 @@ class Slider extends React.Component{
     }
     setSliderStyles(){
 
-        const transition = this.state.active * -100/this.state.slides.length
+        const transition = this.state.active * - 100/this.state.slides.length
 
         return {
             width: (this.state.slides.length * 100) + '%',
@@ -98,10 +98,13 @@ class Slider extends React.Component{
         const transition = 100/this.state.slides.length + '%';
 
         return this.state.slides.map((item, index) => (
-            <div className='each-slide' key = {index} style = {{backgroundImage: item.eachSlide, width:transition}}></div>
+            <div 
+            className='each-slide' 
+            key = {index} 
+            style = {{backgroundImage: item.eachSlide, width: transition}}></div>
         ))
     }
-    renderDots(){
+    renderDots() {
         return this.state.slides.map((item, index) => (
             <li 
             className={this.isActive(index) + ' dots'} 
@@ -152,14 +155,25 @@ class Slider extends React.Component{
             </div>
         )
     }
-    this.render() {
+    render() {
         return(
             <div className="slider">
                 <div className="wrapper"
-                style={this.setSliderStyles}>
-
+                style={this.setSliderStyles()}>
+                {this.renderSlides()}
                 </div>
+                {this.renderArrows()}
+                <ul className="dots-container">
+                    {this.renderDots()}
+                </ul>
+                <a 
+                    className="toggle-play"
+                    onClick={this.toggleAutoPlay}>
+                        {this.renderPlayStop()}
+                </a>
             </div>
         )
     }
 }
+
+export default Slider;
